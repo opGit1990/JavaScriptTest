@@ -1,0 +1,408 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Object Oriented JavaScripts</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #314027; display: block; margin: 0 auto; }
+    </style>
+    
+</head>
+<body>
+        <canvas id="myCanvas" width="480" height="320"></canvas>
+<script type= "text/javascript">
+        var customer = {
+            name: "Omprakash",
+            speak: function(){
+                return "Myname is " + this.name ;
+            },
+            address: {
+                street:'barbhathachowk',
+                city:"Raigarh",
+                state:"CG"
+            },
+        
+            company: {
+                companyName:"ITC infotech",
+                companyAddress:"Banaswadi",
+                city:"Bangaluru"
+            } 
+        };
+        document.write(customer.speak() + "<br />");
+        document.write(customer.name +" lives at " + customer.address.street +"<br />");
+        document.write(" company name "+customer.company.companyName+ " which is lacade at "+customer.company.companyAddress+" in city "+customer.company.city+ "<br />");
+        customer.address.country =  "India";
+        document.write("lives in country "+ customer.address.country +"<br />");
+
+        function Person(Name, Gender){
+            this.Name = Name;
+            this.Gender = Gender;
+
+            this.info = function(){
+                return "person name is " +this.Name +" person genser is "+ this.Gender;
+            }
+        }
+
+        var niks = new Person("Nikita Bananje","Female");
+        document.write(niks.info()+"<br />");
+
+        function mamalAnimal(name){
+            this.name = name;
+
+            this.getInfo = function(){
+                 return " mamal animal name is "+this.name;   
+            }
+
+        }
+        mamalAnimal.prototype.sound ="Burrrr";
+        mamalAnimal.prototype.makesound = function(){
+            return this.name +" Says "+this.sound;
+        }
+        
+        var grover = new mamalAnimal("grover");
+        document.write(grover.makesound()+"<br />");
+        document.write("mamal name is "+grover.getInfo()+"<br />");
+        for(prop in grover){
+            document.write(prop +":"+grover[prop]+"<br />");
+        }
+        document.write("name property of grover:- "+ grover.hasOwnProperty("name")+"<br />");
+        document.write("sound property of grovr:- "+grover.hasOwnProperty("sound")+"<br />");
+    Array.prototype.inArray = function inArray(value){
+        for(i=0;i<this.length;i++){
+            if(this[i] === value){
+                return true;
+
+            }
+        }
+        return false;
+    }
+    var sampleArray = [1,2,3,4,5,6];
+    document.write("value is present in Array:- "+sampleArray.inArray(3)+"<br />");
+
+    function secreatCode(){
+        var secreatNumber = 78;
+
+        this.guessNumber = function(num){
+            if(this.num > 78){
+                return "Higher number";
+
+            }else if(this.num < 78){
+                return "Lower number";
+            }else {
+                return "you Guess the right number...!!!Tada...!!!";
+            }
+        } 
+
+    }
+
+    var secreat = new secreatCode();
+    document.write("Secreate number is "+ secreat.secreatNumber + "<br />");
+    document.write("guee number is "+ secreat.guessNumber(78) + "<br />");
+    document.write("guess number is done now move to the address..!!"+"<br />");
+
+    var addressPer = {
+        street:"Chareson road",
+        city :"Bangalore",
+        state:"Karnataka",
+
+        get getAddress(){
+            return this.street +", "+this.city +", "+this.state;
+        },
+
+        set setAddress(theAddress){
+                var parts = theAddress.toString().split(", ");
+                this.street = parts[0] ||"";
+                this.city = parts[1] ||"";
+                this.state = parts[2] ||"";
+        }
+
+    }
+    document.write(addressPer.street+"<br />");
+    document.write("Address "+addressPer.getAddress+"<br />");
+    addressPer.setAddress = "Barbhatha Chouk, Raigarh, C.G";
+    document.write("City "+addressPer.city+"<br />");
+    document.write("Updated address:--"+addressPer.getAddress+"<br />");
+    document.write("Use of getter and setter in different way check it out..!!!"+"<br />");
+
+    function coOrdintes(){
+        this.longitude =0;
+        this.latitude =0;
+    }
+    Object.__defineGetter__.call(coOrdintes.prototype,"getCords",function(){
+        return "Longitue:- " +this.longitude +" Latitude:- "+this.latitude;
+    });
+
+    Object.__defineSetter__.call(coOrdintes.prototype,"setCords",function(cords){
+        var param = cords.toString().split(", ");
+        this.longitude = param[0] || "";
+        this.latitude = param[1] ||"";
+
+    });
+    var testCords = new coOrdintes();
+    testCords.setCords = "10.5, 20.8";
+    document.write("Coordinates:-- "+ testCords.getCords + "<br />");
+
+    document.write("Getter and setter method using define property method" + "<br />");
+
+    function Point(){
+        this.xPoint =0;
+        this.yPoint =0;
+    }  
+        document.write("inside Point Function..!!<br />")
+        Object.defineProperty(Point.prototype,"pointPos",{
+            get: function(){
+                return "X: " + this.xPoint + " And Y: "+this.yPoint;
+            },
+            set: function(thePoint) {
+                var parts = thePoint.toString().split(", ");
+                this.xPoint = parts[0] || '';
+                this.yPoint = parts[1] || '';
+             }
+        });
+        
+        var testpoint = new Point();
+        testpoint.pointPos = "100, 200";
+        document.write( testpoint.pointPos + "<br />");
+        
+        document.write("using variable function create getter and setter method...!!<br />");
+
+        var Circle = function(radius){
+            this._radius = radius;
+        }
+        Circle.prototype ={
+            set radius(radius){this._radius = radius; },
+            get radius(){return this._radius;},
+            get area(){return Math.PI * (this._radius * this._radius);}
+        };
+      var circ = new Circle(15);
+      circ.radius = 15;
+      document.write("Radius of circle is:-- "+ circ.radius +"<br />");
+      document.write("Area of the circle is calculatd based on the radious is given as the oformula:-- <br />");
+      document.write(circ.area.toFixed(2)+"<br />");  
+      document.write("Now check for the inheritance property in Java script..!!!   </br />");
+
+      function Animal(){
+          this.name = "Animal";
+
+          this.toString = function(){
+              return "Name of animal is:- " + this.name;
+          };
+      }  
+      function Canine(){
+          this.name = "Canine";
+
+      }
+      function Wolf(){
+          this.name ="Wolf";
+      }
+      Canine.prototype = new Animal();
+      Wolf.prototype = new Canine();  
+      Canine.prototype.constructor = Canine;
+      Wolf.prototype.constructor = Wolf;
+      var arcticWolf = new Wolf();
+      var landCanine= new Canine();
+      document.write("Name : " + arcticWolf.toString() +"<br />");
+      document.write("wolf is instance of Animal:-" + (arcticWolf instanceof Animal) +"<br />");
+      document.write("Check sound make by different animals:-<br />");
+      
+      Animal.prototype.sound ="Burrr";
+      Animal.prototype.getSound = function(){
+          return "Animal " + this.name +" makes sound :-" +this.sound;
+      };
+      Canine.prototype.sound ="woooo";
+      Wolf.prototype.sound ="Wolfffff";
+      document.write("sound make:-"+arcticWolf.getSound() +"<br />");         
+      document.write("Canine make sound:-"+landCanine.getSound()+"<br />");
+      
+      function Radent(){
+          this.name = "Radent";
+      }
+      function Rat(){
+          this.name ="Rat";
+      }
+      
+      Radent.prototype = new Animal();
+      Rat.prototype = Radent.prototype;
+      Radent.prototype.constructor = Radent;
+      Rat.prototype.constructor=Rat;
+      var caneRat = new Rat();
+      var canRadent =new Radent();
+      document.write("name of rat :-"+ caneRat.toString() +"<br />");
+      document.write("name of radent :-"+ canRadent.toString() +"<br />");
+
+      function extend(child,parent){
+          var Temp = function(){};
+          Temp.prototype = parent.prototype;
+          child.prototype = new Temp();
+          child.prototype.constructor = child;
+      }
+    function deer(){
+        this.name = "Deer";
+        this.sound ="Duffff";
+    }
+    extend(deer,Animal)
+    var empla = new deer()
+    document.write("animal is :-" + empla.getSound()+"<br />");
+
+    function Vehicle(name){
+        this.name ="vehicle";
+    }
+    Vehicle.prototype ={
+        Drive: function(){
+            return "Drive forward:" +this.name;
+        },
+        Stop: function(){
+            return "Drive stop" + this.name; 
+        }
+    }
+    function Truck(name){
+        this.name =name;    
+    }
+    Truck.prototype = new Vehicle();
+    Truck.prototype.constructor = Truck;
+    Truck.prototype.Drive = function(){
+        var drivMsg = Vehicle.prototype.Drive.apply(this);
+        return drivMsg+="Through a feild <br />";
+    }
+    var jeep = new Truck("Jeep");
+    document.write(jeep.Drive()+"</ br>");
+    document.write(jeep.Stop()+"<br />");
+
+    // If we execute the following line in the console:
+    function storeNames() { return arguments; }
+  //  var storeVal = storeNames("Mulder", "Scully", "Alex Kryceck");
+    // The output will be { '0': 'Mulder', '1': 'Scully', '2': 'Alex Kryceck' }
+    document.write(storeNames("Mulder", "Scully", "Alex Kryceck"));
+    document.write("check the execution flow of the function...!!!!<br />");
+
+    var nameTest ="Omprakash chouhan";
+
+    function first(){
+
+        var a = 'hello';
+        second();
+        var x = a + nameTest;
+        document.write("inside first method:-"+ x +"<br />");
+    }
+
+    function second(){
+        var b = 'HI';
+        third();
+        var y = b + nameTest;
+        document.write("inside Second method:-"+ y +"<br />");
+        console.log(y,);
+    }
+    function third(){
+        var c = 'Hey';
+        var z = c + nameTest;
+        document.write("inside third method:-"+ z +"<br />");
+        console.log(c,z);
+    }
+
+    first();
+    document.write("Call the second() method:--<br />");
+    second();
+
+    document.write("Shorting algorithm practice...!!<br />");
+
+    function bubbleSort(arr){
+    var len = arr.length;
+    for (var i = len-1; i>=0; i--){
+        for(var j = 1; j<=i; j++){
+        if(arr[j-1]>arr[j]){
+            var temp = arr[j-1];
+            arr[j-1] = arr[j];
+            arr[j] = temp;
+            }
+        }
+    }
+   return "value after shorting array is:--" + arr+ "<br />";
+}
+    valueArr1= bubbleSort([7,5,2,4,3,9]); //[2, 3, 4, 5, 7, 9]
+    document.write("[7,5,2,4,3,9]"+valueArr1+"<br />");
+    valueArr2 = bubbleSort([9,7,5,4,3,1]); //[1, 3, 4, 5, 7, 9]
+    document.write("[9,7,5,4,3,1]"+valueArr2+"<br />");
+    valueArr3 = bubbleSort([1,2,3,4,5,6]); //[1, 2, 3, 4, 5, 6]
+    document.write("[1,2,3,4,5,6]"+valueArr3+"<br />");
+
+    var string = "Welcome to this Javascript Guide!";
+
+    // Output becomes !ediuG tpircsavaJ siht ot emocleW
+    var reverseEntireSentence = reverseBySeparator(string, "");
+    document.write("reverse the string.!!"+reverseEntireSentence+"<br />");
+    // Output becomes emocleW ot siht tpircsavaJ !ediuG
+    var reverseEachWord = reverseBySeparator(reverseEntireSentence, " ");
+    document.write("reverse the words...!"+reverseEachWord+"<br />");
+    function reverseBySeparator(string, separator) {
+    return string.split(separator).reverse().join(separator);
+    }
+    
+    document.write("Application of Arrow function..<br />");
+    sayName = (nameArrow) => {
+        return 'Hello ' + nameArrow;
+    }
+    valRead = sayName("Omprakash");
+    document.write(valRead +"<br />");
+    document.body.style.backgroundColor = "#31E5AC";
+        
+        
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        ctx.beginPath();
+        ctx.rect(20, 40, 50, 50);
+        ctx.rect(80, 80, 70, 70);
+
+        ctx.fillStyle = "#FF0000";
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(240, 160, 20, 0, Math.PI*2, false);
+        ctx.fillStyle = "#CD3E27";
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.rect(160, 10, 100, 40);
+        ctx.strokeStyle = "#E3E531";
+        ctx.stroke();
+        ctx.closePath();
+
+        let cx = document.querySelector("canvas").getContext("2d");
+        cx.beginPath();
+        cx.fillStyle = "#E55431";
+        for (let y = 50; y < 100; y += 10) {
+            cx.moveTo(10, y);
+            cx.lineTo(90, y);
+        }
+        cx.stroke();
+//// creating pi chart of the data given below...
+
+const results = [
+  {name: "Satisfied", count: 1043, color: "lightblue"},
+  {name: "Neutral", count: 563, color: "lightgreen"},
+  {name: "Unsatisfied", count: 510, color: "pink"},
+  {name: "No comment", count: 175, color: "silver"}
+];
+let total = results.reduce((sum, {count}) => sum + count, 0);
+  // Start at the top
+  let currentAngle = -0.5 * Math.PI;
+  for (let result of results) {
+    let sliceAngle = (result.count / total) * 2 * Math.PI;
+    cx.beginPath();
+    // center=100,100, radius=100
+    // from current angle, clockwise by slice's angle
+    cx.arc(100, 100, 100,
+           currentAngle, currentAngle + sliceAngle);
+    currentAngle += sliceAngle;
+    cx.lineTo(100, 100);
+    cx.fillStyle = result.color;
+    cx.fill();
+
+  }
+
+
+</script>        
+</body>
+</html>
